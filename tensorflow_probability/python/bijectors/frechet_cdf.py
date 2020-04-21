@@ -108,10 +108,12 @@ class FrechetCDF(bijector.Bijector):
   def _is_increasing(cls):
     return True
 
+  def _z(self, x):
+    return (x - self.loc) / self.scale
+
   def _forward(self, x):
     with tf.control_dependencies(self._maybe_assert_valid_x(x)):
-      z = (x - self.loc) / self.scale
-      return tf.math.exp(-z**(-self.concentration))
+      return tf.math.exp(-self._z(x)**(-self.concentration))
 
   def _inverse(self, y):
     with tf.control_dependencies(self._maybe_assert_valid_y(y)):
@@ -130,9 +132,9 @@ class FrechetCDF(bijector.Bijector):
     with tf.control_dependencies(self._maybe_assert_valid_x(x)):
       scale = tf.convert_to_tensor(self.scale)
       concentration = tf.convert_to_tensor(self.concentration)
-      z = (x - self.loc) / scale
       return (tf.math.log(concentration) - tf.math.log(scale)
-              - (1. + concentration) * tf.math.log(z) - z**(-concentration))
+              - (1. + concentration) * tf.math.log(self._z(x))
+              - self._z(x)**(-concentration))
 
   def _maybe_assert_valid_x(self, x):
     if not self.validate_args:

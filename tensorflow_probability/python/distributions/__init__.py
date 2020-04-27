@@ -42,6 +42,7 @@ from tensorflow_probability.python.distributions.doublesided_maxwell import Doub
 from tensorflow_probability.python.distributions.empirical import Empirical
 from tensorflow_probability.python.distributions.exponential import Exponential
 from tensorflow_probability.python.distributions.finite_discrete import FiniteDiscrete
+from tensorflow_probability.python.distributions.frechet import Frechet
 from tensorflow_probability.python.distributions.gamma import Gamma
 from tensorflow_probability.python.distributions.gamma_gamma import GammaGamma
 from tensorflow_probability.python.distributions.gaussian_process import GaussianProcess
@@ -165,6 +166,7 @@ __all__ = [
     'Gamma',
     'GammaGamma',
     'InverseGaussian',
+    'Frechet',
     'GeneralizedPareto',
     'Geometric',
     'GaussianProcess',

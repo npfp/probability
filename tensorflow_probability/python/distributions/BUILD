@@ -485,6 +485,20 @@ multi_substrate_py_library(
 )
 
 multi_substrate_py_library(
+    name = "frechet",
+    srcs = ["frechet.py"],
+    deps = [
+        ":gamma",
+        # numpy dep,
+        # tensorflow dep,
+        "//tensorflow_probability/python/bijectors:softplus",
+        "//tensorflow_probability/python/internal:dtype_util",
+        "//tensorflow_probability/python/internal:samplers",
+        "//tensorflow_probability/python/internal:tensor_util",
+    ],
+)
+
+multi_substrate_py_library(
     name = "gamma",
     srcs = ["gamma.py"],
     deps = [
@@ -1951,6 +1965,19 @@ multi_substrate_py_test(
     srcs = ["finite_discrete_test.py"],
     deps = [
         # numpy dep,
+        # tensorflow dep,
+        "//tensorflow_probability",
+        "//tensorflow_probability/python/internal:test_util",
+    ],
+)
+
+multi_substrate_py_test(
+    name = "frechet_test",
+    srcs = ["frechet_test.py"],
+    deps = [
+        ":frechet",
+        # numpy dep,
+        # scipy dep,
         # tensorflow dep,
         "//tensorflow_probability",
         "//tensorflow_probability/python/internal:test_util",

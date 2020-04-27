@@ -212,16 +212,18 @@ class Frechet(transformed_distribution.TransformedDistribution):
             + tf.math.log(scale/self.concentration))
 
   def _mean(self):
-    return prefer_static.smart_where(
-      tf.greater(self.concentration, 1.),
+    concentration = tf.convert_to_tensor(self.concentration)
+    return tf.where(
+      concentration > 1.,
       self.loc + self.scale * gamma(1 - 1./self.concentration),
       np.infty)
 
   def _variance(self):
     # Use broadcasting rules to calculate the full broadcast sigma.
+    concentration = tf.convert_to_tensor(self.concentration)
     scale = self.scale * tf.ones_like(self.loc)
-    return prefer_static.smart_where(
-      tf.greater(self.concentration, 2.),
+    return tf.where(
+      concentration > 2.,
       (gamma(1. - 2./self.concentration)
        - gamma(1. - 1./self.concentration) ** 2
        ) * scale ** 2,

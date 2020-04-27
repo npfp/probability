@@ -54,6 +54,7 @@ TF2_FRIENDLY_DISTS = (
     'Empirical',
     'Exponential',
     'FiniteDiscrete',
+    'Frechet',
     'Gamma',
     'GammaGamma',
     'GeneralizedPareto',
